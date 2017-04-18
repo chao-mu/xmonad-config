@@ -26,29 +26,28 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal = "/usr/bin/gnome-terminal"
+myTerminal = "urxvt"
 
 -- The command to lock the screen or show the screensaver.
-myScreensaver = "/usr/bin/gnome-screensaver-command --lock"
+myScreensaver = "slock"
 
 -- The command to take a selective screenshot, where you select
 -- what you'd like to capture on the screen.
-mySelectScreenshot = "select-screenshot"
+mySelectScreenshot = "scrot -s"
 
 -- The command to take a fullscreen screenshot.
-myScreenshot = "screenshot"
+myScreenshot = "scrot"
 
 -- The command to use as a launcher, to launch commands that don't have
 -- preset keybindings.
-myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
+myLauncher = "dmenu_run"
 
 
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
 --
-myWorkspaces = ["1:term","2:web","3:code","4:vm","5:media"] ++ map show [6..9]
-
+myWorkspaces = ["1:dev"] ++ map show [2..9]
 
 ------------------------------------------------------------------------
 -- Window rules
@@ -134,7 +133,7 @@ myBorderWidth = 1
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
-myModMask = mod1Mask
+myModMask = mod4Mask
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----------------------------------------------------------------------
