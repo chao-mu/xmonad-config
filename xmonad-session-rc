@@ -15,20 +15,9 @@ setxkbmap -option "ctrl:nocaps" &
 # Start a window compositor. This ensures Google Chrome paints correctly.
 xcompmgr -n &
 
-# Start the system tray
-tray &
+# Set background image
+feh --randomize --bg-fill ~/.wallpaper/*.jpg
 
-# Start two terminals
-gnome-terminal &
-gnome-terminal &
-
-# Start a browser
-google-chrome &
-
-# Start screensaver
-gnome-screensaver &
-
-# Start sound server
-pulseaudio --start --log-target=syslog &
-
-gnome-session &
+# Remap capslock to escape
+xmodmap -e 'clear Lock'
+xmodmap -e 'keycode 0x42=Escape'

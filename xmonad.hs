@@ -63,20 +63,7 @@ myWorkspaces = ["1:dev"] ++ map show [2..9]
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
-myManageHook = composeAll
-    [ className =? "Chromium"       --> doShift "2:web"
-    , className =? "Google-chrome"  --> doShift "2:web"
-    , resource  =? "desktop_window" --> doIgnore
-    , className =? "Galculator"     --> doFloat
-    , className =? "Steam"          --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , resource  =? "gpicview"       --> doFloat
-    , className =? "MPlayer"        --> doFloat
-    , className =? "VirtualBox"     --> doShift "4:vm"
-    , className =? "Xchat"          --> doShift "5:media"
-    , className =? "stalonetray"    --> doIgnore
-    , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
-
+myManageHook = manageDocks <+> manageHook defaultConfig
 
 ------------------------------------------------------------------------
 -- Layouts
@@ -88,15 +75,7 @@ myManageHook = composeAll
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts (
-    ThreeColMid 1 (3/100) (1/2) |||
-    Tall 1 (3/100) (1/2) |||
-    Mirror (Tall 1 (3/100) (1/2)) |||
-    tabbed shrinkText tabConfig |||
-    Full |||
-    spiral (6/7)) |||
-    noBorders (fullscreenFull Full)
-
+myLayout = avoidStruts $ layoutHook defaultConfig ||| tabbed shrinkText tabConfig
 
 ------------------------------------------------------------------------
 -- Colors and borders
@@ -270,7 +249,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      sendMessage (IncMasterN (-1)))
 
   -- Toggle the status bar gap.
-  -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
@@ -355,7 +333,7 @@ main = do
           , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
           , ppSep = "   "
       }
-      , manageHook = manageDocks <+> myManageHook
+      , manageHook = myManageHook
       , startupHook = setWMName "LG3D"
   }
 
@@ -383,7 +361,7 @@ defaults = defaultConfig {
     mouseBindings      = myMouseBindings,
 
     -- hooks, layouts
-    layoutHook         = smartBorders $ myLayout,
+    layoutHook         = myLayout,
     manageHook         = myManageHook,
     startupHook        = myStartupHook
 }
